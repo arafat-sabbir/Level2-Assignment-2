@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 const VariantValidationSchema = z.object({
-  type: z.string().nonempty({ message: "Type is required and cannot be empty" }),
-  value: z.string().nonempty({ message: "Value is required and cannot be empty" }),
+  type: z.string().min(1,{ message: "Type is required and cannot be empty" }),
+  value: z.string().min(1,{ message: "Value is required and cannot be empty" }),
 });
 
 const InventoryValidationSchema = z.object({
@@ -17,14 +17,14 @@ const InventoryValidationSchema = z.object({
 });
 
 const ProductValidationSchema = z.object({
-  name: z.string().nonempty({ message: "Name is required and cannot be empty" }),
-  description: z.string().nonempty({ message: "Description is required and cannot be empty" }),
+  name: z.string().min(1,{ message: "Name is required and cannot be empty" }),
+  description: z.string().min(1,{ message: "Description is required and cannot be empty" }),
   price: z.number({
     required_error: "Price is required",
     invalid_type_error: "Price must be a number",
   }),
-  category: z.string().nonempty({ message: "Category is required and cannot be empty" }),
-  tags: z.array(z.string().nonempty({ message: "Tag cannot be empty" }), {
+  category: z.string().min(1,{ message: "Category is required and cannot be empty" }),
+  tags: z.array(z.string().min(1,{ message: "Tag cannot be empty" }), {
     required_error: "Tags are required",
     invalid_type_error: "Tags must be an array of strings",
   }),

@@ -15,8 +15,8 @@ const addNewProduct = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(400).json({
       success: false,
-      message: err.message || 'Error Creating Product',
-      error: err.message,
+      message: err.issues.map((issue:any) =>issue.message) || 'Error Creating Product',
+      error: err,
     });
   }
 };
