@@ -7,8 +7,14 @@ const AddNewOrderToDb = async (data: any) => {
 };
 
 const getAllOrderFromDb = async () => {
-    const allOrders = OrderModel.find();
-    return allOrders;
-  };
-  
-export const OrderService = { AddNewOrderToDb,getAllOrderFromDb };
+  const allOrders = OrderModel.find();
+  return allOrders;
+};
+
+const getOrderByEmailFromDb = async (email: string) => {
+    console.log(email);
+  const orderByEmail =await OrderModel.find({ email }).exec();
+  return orderByEmail;
+};
+
+export const OrderService = { AddNewOrderToDb, getAllOrderFromDb,getOrderByEmailFromDb };

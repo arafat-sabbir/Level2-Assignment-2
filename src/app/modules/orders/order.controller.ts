@@ -31,14 +31,20 @@ const createNewOrder = async (req: Request, res: Response) => {
 
 const getAllOrders = async (req: Request, res: Response) => {
   try {
-    const allOrder = await OrderService.getAllOrderFromDb();
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: 'Orders fetched successfully!',
-        data: allOrder,
-      });
+    let result;
+    const { email } = req.query;
+    if (email) {
+      result = await OrderService.getOrderByEmailFromDb(email as string);
+    } else {
+      result = await OrderService.getAllOrderFromDb();
+    }
+    res.status(200).json({
+      success: true,
+      message: email
+        ? 'Orders fetched successfully for user email!'
+        : "'Orders fetched successfully!'",
+      data: result,
+    });
   } catch (err: any) {
     res
       .status(400)
@@ -46,4 +52,4 @@ const getAllOrders = async (req: Request, res: Response) => {
   }
 };
 
-export { createNewOrder,getAllOrders };
+export { createNewOrder, getAllOrders };
