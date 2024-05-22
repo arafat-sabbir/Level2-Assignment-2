@@ -4,7 +4,7 @@ const zod_1 = require("zod");
 const mongoose_1 = require("mongoose");
 // Custom validator for ObjectId
 const objectIdSchema = zod_1.z.custom(val => {
-    return mongoose_1.Types.ObjectId.isValid(val) && val instanceof mongoose_1.Types.ObjectId;
+    return mongoose_1.Types.ObjectId.isValid(val);
 }, {
     message: 'Invalid ObjectId',
 });

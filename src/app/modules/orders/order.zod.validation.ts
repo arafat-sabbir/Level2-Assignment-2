@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 // Custom validator for ObjectId
 const objectIdSchema = z.custom<Types.ObjectId>(
   val => {
-    return Types.ObjectId.isValid(val) && val instanceof Types.ObjectId;
+    return Types.ObjectId.isValid(val)
   },
   {
     message: 'Invalid ObjectId',
