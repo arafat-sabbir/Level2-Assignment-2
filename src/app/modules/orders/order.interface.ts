@@ -1,6 +1,6 @@
-import { Document, Types } from 'mongoose';
+import { Types } from 'mongoose';
 
-export interface TOrder extends Document {
+export interface TOrder {
   email: string;
   productId: Types.ObjectId;
   price: number;

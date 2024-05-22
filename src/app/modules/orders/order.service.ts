@@ -2,7 +2,7 @@ import { ProductService } from '../products/product.service';
 import { TOrder } from './order.interface';
 import OrderModel from './order.model';
 
-const AddNewOrderToDb = async (data:any): Promise<TOrder> => {
+const AddNewOrderToDb = async (data: TOrder): Promise<TOrder> => {
   const Product = await ProductService.getSingleProductFromDb(
     String(data.productId),
   );

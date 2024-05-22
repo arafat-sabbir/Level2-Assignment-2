@@ -92,6 +92,7 @@ const updateSingleProductById = async (req: Request, res: Response) => {
   }
 };
 
+// Delete A Specific Order From Database With Id
 const deleteSingleProduct = async (req: Request, res: Response) => {
   try {
     const _id = req.params.productId;

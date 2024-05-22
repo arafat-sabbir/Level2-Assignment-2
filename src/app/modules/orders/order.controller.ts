@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import orderValidationSchema from './order.zod.validation';
 import { OrderService } from './order.service';
 
+
+// Create A New Order To Database
 const createNewOrder = async (req: Request, res: Response) => {
   try {
     const { email, productId, price, quantity } = req.body;
@@ -18,7 +20,6 @@ const createNewOrder = async (req: Request, res: Response) => {
       data: newOrder,
     });
   } catch (err: any) {
-    console.log(err);
     res.status(400).json({
       success: false,
       message:
@@ -30,6 +31,8 @@ const createNewOrder = async (req: Request, res: Response) => {
   }
 };
 
+
+// Get All Order Or Orders By Email From DataBase
 const getAllOrders = async (req: Request, res: Response) => {
   try {
     let result;
@@ -47,9 +50,11 @@ const getAllOrders = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err: any) {
-    res
-      .status(400)
-      .json({ success: false, message: 'Error fetching Order!', error: err.message });
+    res.status(400).json({
+      success: false,
+      message: 'Error fetching Order!',
+      error: err.message,
+    });
   }
 };
 
