@@ -6,4 +6,9 @@ const AddNewOrderToDb = async (data: any) => {
   return newOrder;
 };
 
-export const OrderService = { AddNewOrderToDb };
+const getAllOrderFromDb = async () => {
+    const allOrders = OrderModel.find();
+    return allOrders;
+  };
+  
+export const OrderService = { AddNewOrderToDb,getAllOrderFromDb };

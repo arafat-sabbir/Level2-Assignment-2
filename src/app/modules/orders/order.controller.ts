@@ -29,4 +29,21 @@ const createNewOrder = async (req: Request, res: Response) => {
   }
 };
 
-export { createNewOrder };
+const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const allOrder = await OrderService.getAllOrderFromDb();
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: 'Orders fetched successfully!',
+        data: allOrder,
+      });
+  } catch (err: any) {
+    res
+      .status(400)
+      .json({ success: false, message: 'Error fetching Order!', error: err });
+  }
+};
+
+export { createNewOrder,getAllOrders };
