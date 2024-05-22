@@ -23,24 +23,67 @@ const addNewProduct = async (req: Request, res: Response) => {
   }
 };
 
-const getAllProduct = async (req:Request, res:Response) => {
- try{
+const getAllProduct = async (req: Request, res: Response) => {
+  try {
     const result = await ProductService.getAllProductFromDb();
     res.status(200).json({
-        success: true,
-        message: 'Product Fetched successfully!',
-        data: result,
-      });
- }catch(err:any){
+      success: true,
+      message: 'Product Fetched successfully!',
+      data: result,
+    });
+  } catch (err: any) {
     res.status(400).json({
-        success: false,
-        message:
-          err.issues.map((issue: any) => issue.message) ||
-          'Error Fetching Products',
-        error: err,
-      });
- }
-
+      success: false,
+      message:
+        err.issues.map((issue: any) => issue.message) ||
+        'Error Fetching Products',
+      error: err,
+    });
+  }
 };
 
-export { addNewProduct,getAllProduct };
+const getSingleProductById = async (req: Request, res: Response) => {
+  try {
+    const _id = req.params.productId;
+    const singleProduct = await ProductService.getSingeProductFromDb(_id);
+    res.status(200).json({
+      success: true,
+      message: 'Product Fetched successfully!',
+      data: singleProduct,
+    });
+  } catch (err: any) {
+    res.status(400).json({
+      success: false,
+      message:
+        err.issues.map((issue: any) => issue.message) ||
+        'Error Fetching Products',
+      error: err,
+    });
+  }
+};
+
+const updateSingleProductById = async (req: Request, res: Response) => {
+  try {
+    const _id = req.params.productId;
+    const newData = req.body;
+    const updatedProduct = await ProductService.updateSingleProductFromDb(
+      _id,
+      newData,
+    );
+    res.status(200).json({
+      success: true,
+      message: 'Product updated successfully!',
+      data: updatedProduct,
+    });
+  } catch (err: any) {
+    res.status(400).json({
+      success: false,
+      message:
+        err.issues.map((issue: any) => issue.message) ||
+        'Error Fetching Products',
+      error: err,
+    });
+  }
+};
+
+export { addNewProduct, getAllProduct, getSingleProductById,updateSingleProductById };
