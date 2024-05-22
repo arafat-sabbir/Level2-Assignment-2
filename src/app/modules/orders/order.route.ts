@@ -3,7 +3,6 @@ import { createNewOrder, getAllOrders } from './order.controller';
 
 const router = express.Router();
 
-
 // Routes to CreateNewOrder
 router.post('/', createNewOrder);
 // Routes to get AllOrder Or OrderByEmail
