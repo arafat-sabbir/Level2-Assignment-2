@@ -45,7 +45,7 @@ const getAllProduct = async (req: Request, res: Response) => {
 const getSingleProductById = async (req: Request, res: Response) => {
   try {
     const _id = req.params.productId;
-    const singleProduct = await ProductService.getSingeProductFromDb(_id);
+    const singleProduct = await ProductService.getSingleProductFromDb(_id);
     res.status(200).json({
       success: true,
       message: 'Product Fetched successfully!',
@@ -54,9 +54,7 @@ const getSingleProductById = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(400).json({
       success: false,
-      message:
-        err.issues.map((issue: any) => issue.message) ||
-        'Error Fetching Products',
+      message:'Error Fetching Products',
       error: err,
     });
   }
@@ -78,12 +76,34 @@ const updateSingleProductById = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(400).json({
       success: false,
-      message:
-        err.issues.map((issue: any) => issue.message) ||
-        'Error Updating Products',
+      message:'Error Updating Products',
       error: err,
     });
   }
 };
 
-export { addNewProduct, getAllProduct, getSingleProductById,updateSingleProductById };
+const deleteSingleProduct = async (req: Request, res: Response) => {
+ try{
+  const _id = req.params.productId;
+  const result = await ProductService.deleteProductFromDb(_id);
+  res.status(200).json({
+    success: true,
+    message: 'Product deleted successfully!',
+    data: null,
+  });
+ }catch(err:any){
+  res.status(400).json({
+    success: false,
+    message:'Error While Deleting Products',
+    error: err,
+  });
+ }
+};
+
+export {
+  addNewProduct,
+  getAllProduct,
+  getSingleProductById,
+  updateSingleProductById,
+  deleteSingleProduct
+};

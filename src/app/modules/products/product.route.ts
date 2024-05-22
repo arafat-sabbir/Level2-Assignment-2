@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   addNewProduct,
+  deleteSingleProduct,
   getAllProduct,
   getSingleProductById,
   updateSingleProductById,
@@ -11,5 +12,6 @@ router.post('/', addNewProduct);
 router.get('/', getAllProduct);
 router.get('/:productId', getSingleProductById);
 router.put('/:productId', updateSingleProductById);
+router.delete('/:productId', deleteSingleProduct);
 
 export default router;
