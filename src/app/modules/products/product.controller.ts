@@ -80,7 +80,7 @@ const updateSingleProductById = async (req: Request, res: Response) => {
       success: false,
       message:
         err.issues.map((issue: any) => issue.message) ||
-        'Error Fetching Products',
+        'Error Updating Products',
       error: err,
     });
   }
