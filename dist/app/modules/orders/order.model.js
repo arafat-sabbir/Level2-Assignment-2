@@ -1,11 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
+// Schema for Order
 const OrderSchema = new mongoose_1.Schema({
     email: { type: String, required: true },
-    productId: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'Product' },
+    productId: { type: mongoose_1.Schema.Types.ObjectId, required: true },
     price: { type: Number, required: true },
     quantity: { type: Number, required: true },
 });
+// Order Model
 const OrderModel = (0, mongoose_1.model)('Order', OrderSchema);
+// Export The Order Model
 exports.default = OrderModel;

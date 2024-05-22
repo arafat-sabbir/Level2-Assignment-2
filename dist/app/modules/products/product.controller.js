@@ -26,7 +26,8 @@ const addNewProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (err) {
         res.status(400).json({
             success: false,
-            message: err.issues.map((issue) => issue.message) ||
+            message: (Array.isArray(err.issues) &&
+                err.issues.map((issue) => issue.message)) ||
                 'Error Creating Product',
             error: err,
         });
@@ -54,7 +55,8 @@ const getAllProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (err) {
         res.status(400).json({
             success: false,
-            message: err.issues.map((issue) => issue.message) ||
+            message: (Array.isArray(err.issues) &&
+                err.issues.map((issue) => issue.message)) ||
                 'Error Fetching Products',
             error: err.message || err,
         });
@@ -100,6 +102,7 @@ const updateSingleProductById = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.updateSingleProductById = updateSingleProductById;
+// Delete A Specific Order From Database With Id
 const deleteSingleProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const _id = req.params.productId;

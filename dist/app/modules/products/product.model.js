@@ -25,16 +25,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const { Schema } = mongoose_1.default;
+// VariantSchema For TVariant Interface
 const VariantSchema = new Schema({
     type: { type: String, required: true },
     value: { type: String, required: true },
 });
+// InventorySchema For TInventory Interface
 const InventorySchema = new Schema({
     quantity: { type: Number, required: true },
     inStock: { type: Boolean, required: true },
 });
+// Product Schema For TProduct Interface
 const ProductSchema = new Schema({
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
     category: { type: String, required: true },
