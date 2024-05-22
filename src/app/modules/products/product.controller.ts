@@ -47,7 +47,7 @@ const getAllProduct = async (req: Request, res: Response) => {
       message:
         err.issues.map((issue: any) => issue.message) ||
         'Error Fetching Products',
-      error: err,
+      error: err.message || err,
     });
   }
 };
@@ -65,7 +65,7 @@ const getSingleProductById = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message: 'Error Fetching Products',
-      error: err,
+      error: err.message || err,
     });
   }
 };
@@ -115,5 +115,5 @@ export {
   getAllProduct,
   getSingleProductById,
   updateSingleProductById,
-  deleteSingleProduct
+  deleteSingleProduct,
 };

@@ -6,12 +6,18 @@ const addProductToDb = async (product: TProduct) => {
   return newProduct;
 };
 const getAllProductFromDb = async () => {
-  const AllProduct = ProductModel.find();
+  const AllProduct = await ProductModel.find();
+  if (!AllProduct.length) {
+    throw new Error('No Product Found');
+  }
   return AllProduct;
 };
 
 const getSingleProductFromDb = async (_id: string) => {
   const SingleProduct = await ProductModel.findById({ _id });
+  if (!SingleProduct) {
+    throw new Error('No Product Found');
+  }
   return SingleProduct;
 };
 
@@ -22,8 +28,7 @@ const updateSingleProductFromDb = async (_id: string, data: object) => {
     });
     return updatedProduct;
   } catch (error) {
-    console.error('Error updating product:', error);
-    throw error;
+    throw new Error('Error updating product');
   }
 };
 
@@ -36,6 +41,9 @@ const getSearchProductsFromDb = async (searchTerm: string) => {
   const result = await ProductModel.find({
     $text: { $search: searchTerm },
   });
+  if (!result.length) {
+    throw new Error(`No Product Found For searchTerm ${searchTerm}`);
+  }
   return result;
 };
 
@@ -45,5 +53,5 @@ export const ProductService = {
   getSingleProductFromDb,
   updateSingleProductFromDb,
   deleteProductFromDb,
-  getSearchProductsFromDb
+  getSearchProductsFromDb,
 };

@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
 import orderValidationSchema from './order.zod.validation';
 import { OrderService } from './order.service';
-import { Types } from 'mongoose';
 
 const createNewOrder = async (req: Request, res: Response) => {
   try {
     const { email, productId, price, quantity } = req.body;
     const validOrderData = orderValidationSchema.parse({
       email,
-      productId: new Types.ObjectId(productId),
+      productId: productId,
       price,
       quantity,
     });
@@ -19,12 +18,14 @@ const createNewOrder = async (req: Request, res: Response) => {
       data: newOrder,
     });
   } catch (err: any) {
+    console.log(err);
     res.status(400).json({
       success: false,
       message:
-        err.issues.map((issue: any) => issue.message) ||
+        (Array.isArray(err.issues) &&
+          err.issues.map((issue: any) => issue.message)) ||
         'Error Ordering Product',
-      error: err,
+      error: err.message,
     });
   }
 };
@@ -48,7 +49,7 @@ const getAllOrders = async (req: Request, res: Response) => {
   } catch (err: any) {
     res
       .status(400)
-      .json({ success: false, message: 'Error fetching Order!', error: err });
+      .json({ success: false, message: 'Error fetching Order!', error: err.message });
   }
 };
 

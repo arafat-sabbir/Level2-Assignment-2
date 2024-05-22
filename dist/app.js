@@ -5,11 +5,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+// All The Base Routes
+const product_route_1 = __importDefault(require("./app/modules/products/product.route"));
+const order_route_1 = __importDefault(require("./app/modules/orders/order.route"));
 const app = (0, express_1.default)();
-const port = 3000;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
-app.get("/", (req, res) => {
-    res.send("Hello World!");
+// All The Routes
+app.use('/api/products', product_route_1.default);
+app.use('/api/orders', order_route_1.default);
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+app.all('*', (req, res) => {
+    res.status(404).json({ success: false, message: `Route not found` });
 });
 exports.default = app;
