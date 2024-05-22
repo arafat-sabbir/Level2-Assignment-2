@@ -14,11 +14,19 @@ const getAllProductFromDb = async () => {
 };
 
 const getSingleProductFromDb = async (_id: string) => {
-  const SingleProduct = await ProductModel.findById({ _id });
-  if (!SingleProduct) {
-    throw new Error('No Product Found');
+  try {
+    const SingleProduct = await ProductModel.findById({ _id });
+    if (!SingleProduct) {
+      throw new Error('No Product Found');
+    }
+    return SingleProduct;
+  } catch (error) {
+    if (error instanceof Error && error.name === 'CastError') {
+      throw new Error('No Product Found');
+    } else {
+      throw new Error('Error updating product');
+    }
   }
-  return SingleProduct;
 };
 
 const updateSingleProductFromDb = async (_id: string, data: object) => {
@@ -28,7 +36,11 @@ const updateSingleProductFromDb = async (_id: string, data: object) => {
     });
     return updatedProduct;
   } catch (error) {
-    throw new Error('Error updating product');
+    if (error instanceof Error && error.name === 'CastError') {
+      throw new Error('No Product Found');
+    } else {
+      throw new Error('Error updating product');
+    }
   }
 };
 

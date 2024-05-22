@@ -42,11 +42,10 @@ const getAllOrderFromDb = () => __awaiter(void 0, void 0, void 0, function* () {
     return allOrders;
 });
 const getOrderByEmailFromDb = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const orderByEmail = yield order_model_1.default.find({ email }).exec();
-    if (!orderByEmail.length) {
-        throw new Error('Order not found');
-    }
-    return orderByEmail;
+    console.log(email);
+    const query = { email };
+    const OrderByEmail = yield order_model_1.default.find(query);
+    return OrderByEmail;
 });
 exports.OrderService = {
     AddNewOrderToDb,

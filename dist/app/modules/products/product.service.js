@@ -26,11 +26,21 @@ const getAllProductFromDb = () => __awaiter(void 0, void 0, void 0, function* ()
     return AllProduct;
 });
 const getSingleProductFromDb = (_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const SingleProduct = yield product_model_1.default.findById({ _id });
-    if (!SingleProduct) {
-        throw new Error('No Product Found');
+    try {
+        const SingleProduct = yield product_model_1.default.findById({ _id });
+        if (!SingleProduct) {
+            throw new Error('No Product Found');
+        }
+        return SingleProduct;
     }
-    return SingleProduct;
+    catch (error) {
+        if (error instanceof Error && error.name === 'CastError') {
+            throw new Error('No Product Found');
+        }
+        else {
+            throw new Error('Error updating product');
+        }
+    }
 });
 const updateSingleProductFromDb = (_id, data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -40,7 +50,12 @@ const updateSingleProductFromDb = (_id, data) => __awaiter(void 0, void 0, void 
         return updatedProduct;
     }
     catch (error) {
-        throw new Error('Error updating product');
+        if (error instanceof Error && error.name === 'CastError') {
+            throw new Error('No Product Found');
+        }
+        else {
+            throw new Error('Error updating product');
+        }
     }
 });
 const deleteProductFromDb = (_id) => __awaiter(void 0, void 0, void 0, function* () {

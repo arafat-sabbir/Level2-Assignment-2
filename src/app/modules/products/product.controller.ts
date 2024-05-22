@@ -16,8 +16,8 @@ const addNewProduct = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message:
-      (Array.isArray(err.issues) &&
-      err.issues.map((issue: any) => issue.message)) ||
+        (Array.isArray(err.issues) &&
+          err.issues.map((issue: any) => issue.message)) ||
         'Error Creating Product',
       error: err,
     });

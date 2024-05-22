@@ -33,11 +33,10 @@ const getAllOrderFromDb = async () => {
 };
 
 const getOrderByEmailFromDb = async (email: string) => {
-  const orderByEmail = await OrderModel.find({ email }).exec();
-  if (!orderByEmail.length) {
-    throw new Error('Order not found');
-  }
-  return orderByEmail;
+  console.log(email);
+  const query = { email };
+  const OrderByEmail = await OrderModel.find(query);
+  return OrderByEmail;
 };
 
 export const OrderService = {
