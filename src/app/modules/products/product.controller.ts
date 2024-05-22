@@ -25,10 +25,20 @@ const addNewProduct = async (req: Request, res: Response) => {
 
 const getAllProduct = async (req: Request, res: Response) => {
   try {
-    const result = await ProductService.getAllProductFromDb();
+    let result;
+    const { searchTerm } = req.query;
+    if (searchTerm) {
+      result = await ProductService.getSearchProductsFromDb(
+        searchTerm as string,
+      );
+    } else {
+      result = await ProductService.getAllProductFromDb();
+    }
     res.status(200).json({
       success: true,
-      message: 'Product Fetched successfully!',
+      message: searchTerm
+        ? `Products matching search term '${searchTerm}' fetched successfully!`
+        : 'Product Fetched successfully!',
       data: result,
     });
   } catch (err: any) {
@@ -54,7 +64,7 @@ const getSingleProductById = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(400).json({
       success: false,
-      message:'Error Fetching Products',
+      message: 'Error Fetching Products',
       error: err,
     });
   }
@@ -76,28 +86,28 @@ const updateSingleProductById = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(400).json({
       success: false,
-      message:'Error Updating Products',
+      message: 'Error Updating Products',
       error: err,
     });
   }
 };
 
 const deleteSingleProduct = async (req: Request, res: Response) => {
- try{
-  const _id = req.params.productId;
-  const result = await ProductService.deleteProductFromDb(_id);
-  res.status(200).json({
-    success: true,
-    message: 'Product deleted successfully!',
-    data: null,
-  });
- }catch(err:any){
-  res.status(400).json({
-    success: false,
-    message:'Error While Deleting Products',
-    error: err,
-  });
- }
+  try {
+    const _id = req.params.productId;
+    await ProductService.deleteProductFromDb(_id);
+    res.status(200).json({
+      success: true,
+      message: 'Product deleted successfully!',
+      data: null,
+    });
+  } catch (err: any) {
+    res.status(400).json({
+      success: false,
+      message: 'Error While Deleting Products',
+      error: err,
+    });
+  }
 };
 
 export {
