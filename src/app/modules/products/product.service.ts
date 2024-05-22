@@ -12,18 +12,23 @@ const getAllProductFromDb = async () => {
 
 const getSingeProductFromDb = async (_id: string) => {
   const SingleProduct = await ProductModel.findById({ _id });
-  console.log(SingleProduct, 'from');
   return SingleProduct;
 };
 
 const updateSingleProductFromDb = async (_id: string, data: object) => {
-  const updatedProduct = await ProductModel.findByIdAndUpdate(
-    { _id },
-    { data },
-    { new: true },
-  );
-  return updatedProduct;
+  try {
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      _id,
+      data,
+      { new: true }
+    );
+    return updatedProduct;
+  } catch (error) {
+    console.error("Error updating product:", error);
+    throw error;
+  }
 };
+
 
 export const ProductService = {
   addProductToDb,
